@@ -141,7 +141,7 @@ R1(config-subif)# ip address 192.168.10.190 255.255.255.192
 4. The router receives it on the matching subinterface, routes it, and sends it out the correct subinterface with the new VLAN tag.
 5. The switch delivers it to the destination access port.
 
-Switches alone cannot perform inter-VLAN routing, the traffic must go to the router first.
+> Switches alone cannot perform inter-VLAN routing, the traffic must go to the router first.
 
 ---
 
