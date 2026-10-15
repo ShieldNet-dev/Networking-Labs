@@ -1,4 +1,4 @@
-#Inter-VLAN Routing with Router-on-a-Stick
+Inter-VLAN Routing with Router-on-a-Stick
 
 CCNA Practice Lab | PingMyNetwork Sandbox
 
