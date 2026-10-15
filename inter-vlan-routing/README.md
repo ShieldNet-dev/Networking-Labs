@@ -12,15 +12,14 @@ This mini lab brings together key networking concepts from my CCNA studies. I co
 
 A big thank-you to the PingMyNetwork team for making hands-on networking practice accessible.
 
-2. Lab Objectives
+## 2. Lab Objectives
 
-- Create three VLANs for separate departments.
-- Subnet an IPv4 network into three "/26" networks.
+- Create three departmental VLANs and subnet an IPv4 network using `/26` prefixes.
 - Assign switch access ports to the appropriate VLANs.
 - Configure an 802.1Q trunk between the switch and router.
-- Configure router subinterfaces for inter-VLAN routing.
-- Assign default gateways to the three subnets.
-- Verify connectivity between devices in different VLANs.
+- Implement Router-on-a-Stick using router subinterfaces.
+- Configure default gateways for each subnet.
+- Verify end-to-end connectivity between devices across VLANs.
 
 3. Network Topology
 
