@@ -23,7 +23,7 @@ A big thank-you to the PingMyNetwork team for making hands-on networking practic
 
 ## 3. Network Topology
 
-The lab consists of **eight PCs distributed across three departments**, each assigned to a dedicated VLAN. All PCs connect to an access switch, which connects to a router through a single **IEEE 802.1Q trunk link**.
+The lab consists of **eight PCs distributed across three departments**, each assigned to a dedicated VLAN. All PCs connect to an access switch, which connects to a router through a single **802.1Q trunk link**.
 
 The router uses the **Router-on-a-Stick** configuration to enable communication between devices in different VLANs.
 
