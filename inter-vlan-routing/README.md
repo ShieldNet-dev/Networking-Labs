@@ -1,6 +1,6 @@
 # Inter-VLAN Routing with Router-on-a-Stick
 
-CCNA Practice Lab | PingMyNetwork Sandbox
+![CCNA Practice Lab](https://img.shields.io/badge/CCNA%20Practice%20Lab-PingMyNetwork%20Sandbox-0969DA?style=for-the-badge&labelColor=1F2328)
 
 A practical networking lab combining VLAN configuration, IPv4 subnetting, 802.1Q trunking, and inter-VLAN routing.
 
