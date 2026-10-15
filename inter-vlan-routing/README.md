@@ -132,16 +132,18 @@ This confirmed that devices in the three separate subnets could communicate thro
 
 ### Verification Checklist
 
-- [x] Created VLANs 10, 20, and 30.
-- [x] Assigned access ports to their respective VLANs.
-- [x] Configured the switch-to-router trunk.
-- [x] Configured router subinterfaces with 802.1Q encapsulation.
-- [x] Assigned the last usable IP address in each subnet to the router gateway.
-- [x] Configured the appropriate IP addressing and default gateways.
-- [x] Successfully tested connectivity between devices in different VLANs.
+- [x] Created VLANs 10, 20, and 30
+- [x] Assigned access ports correctly
+- [x] Configured trunks and allowed VLANs
+- [x] Created router subinterfaces with 802.1Q encapsulation
+- [x] Assigned correct gateway IPs
+- [x] Brought router interface up with `no shutdown`
+- [x] Successfully pinged between all departments
+
+**View the live project:**  
+[Open this lab on PingMyNetwork](https://pingmynetwork.com/sandbox)
 
 ---
-
 ## 8. Key Takeaways
 
 This mini lab helped me connect several networking concepts I had been studying individually.
