@@ -163,7 +163,7 @@ After completing the configuration, I pinged devices across all three VLANs.
 
 **Try this lab yourself:**
 
-1. Download the lab configuration file: [lab-config.json](https://drive.google.com/file/d/16K_QtTtnLLDjS2q8-208grUbBbRJG9c4/view?usp=drivesdk)
+1. Download the lab configuration file: [Inter-vlan-routing.json](https://drive.google.com/file/d/16K_QtTtnLLDjS2q8-208grUbBbRJG9c4/view?usp=drivesdk)
 2. Go to the [PingMyNetwork Sandbox](https://pingmynetwork.com/sandbox)
 3. Import the JSON file into the sandbox
 
