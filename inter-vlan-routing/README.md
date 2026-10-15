@@ -142,17 +142,17 @@ The same principle applies when devices communicate between any of the three VLA
 
 > **Key concept:** The VLANs remain separate Layer 2 broadcast domains, while the router provides Layer 3 connectivity between their IP networks.
 
-7. Verification and Results
+## 7. Verification and Results
 
-After configuring the VLANs, trunk, and router subinterfaces, I tested connectivity between devices in different VLANs using "ping".
+After configuring the VLANs, trunk, and router subinterfaces, I tested connectivity between devices in different VLANs using `ping`.
 
-Result: Successful
+**Result:** Successful
 
 All inter-VLAN pings worked successfully.
 
 This confirmed that devices in the three separate subnets could communicate through the router.
 
-Verification Checklist
+### Verification Checklist
 
 - [x] Created VLANs 10, 20, and 30.
 - [x] Assigned access ports to their respective VLANs.
@@ -162,15 +162,17 @@ Verification Checklist
 - [x] Configured the appropriate IP addressing and default gateways.
 - [x] Successfully tested connectivity between devices in different VLANs.
 
-8. Key Takeaways
+---
+
+## 8. Key Takeaways
 
 This mini lab helped me connect several networking concepts I had been studying individually.
 
-- VLANs: Separate devices into different Layer 2 broadcast domains.
-- Trunking: Allows multiple VLANs to share a physical link.
-- 802.1Q: Identifies VLANs through Ethernet frame tagging.
-- Router-on-a-Stick: Uses router subinterfaces to route traffic between VLAN subnets.
-- IPv4 subnetting: Defines network boundaries, usable host ranges, and default gateway addresses.
+- **VLANs:** Separate devices into different Layer 2 broadcast domains.
+- **Trunking:** Allows multiple VLANs to share a physical link.
+- **802.1Q:** Identifies VLANs through Ethernet frame tagging.
+- **Router-on-a-Stick:** Uses router subinterfaces to route traffic between VLAN subnets.
+- **IPv4 subnetting:** Defines network boundaries, usable host ranges, and default gateway addresses.
 
 Most importantly, I was able to bring these concepts together, configure the network, and verify that communication between all three VLANs worked.
 
