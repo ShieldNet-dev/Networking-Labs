@@ -160,7 +160,7 @@ After completing the configuration, I pinged devices across all three VLANs.
 - [x] Successfully pinged between all departments
 
 **View the live project:**  
-[Open this lab on PingMyNetwork](https://pingmynetwork.com/sandbox)
+[Open this lab on PingMyNetwork Sandbox](https://pingmynetwork.com/sandbox)
 
 ---
 
