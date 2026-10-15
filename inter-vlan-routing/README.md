@@ -21,38 +21,47 @@ A big thank-you to the PingMyNetwork team for making hands-on networking practic
 - Configure default gateways for each subnet.
 - Verify end-to-end connectivity between devices across VLANs.
 
-3. Network Topology
+## 3. Network Topology
 
-The lab consists of eight PCs across three departments, connected to an access switch. The switch connects to a router through a trunk link.
+The lab consists of **eight PCs distributed across three departments**, each assigned to a dedicated VLAN. All PCs connect to an access switch, which connects to a router through a single **IEEE 802.1Q trunk link**.
 
-Department| Number of PCs| VLAN ID
-Cybersecurity| 2| 10
-Software Engineering| 3| 20
-Data Science| 3| 30
-Total| 8| 3 VLANs
+The router uses the **Router-on-a-Stick** configuration to enable communication between devices in different VLANs.
 
-Logical Topology
+### Department and VLAN Summary
 
-  CYBERSECURITY       SOFTWARE ENGINEERING       DATA SCIENCE
-      2 PCs                  3 PCs                  3 PCs
-        |                      |                      |
-     VLAN 10                VLAN 20                VLAN 30
-        \                      |                     /
-         \_____________________|____________________/
-                               |
-                         ACCESS SWITCH
-                               |
-                         802.1Q TRUNK
-                               |
-                            ROUTER
-                               |
-                       ROUTER SUBINTERFACES
-                        /        |        \
-                   G0/0.10   G0/0.20   G0/0.30
-                      |         |         |
-                   VLAN 10   VLAN 20   VLAN 30
+| Department | Number of PCs | VLAN ID |
+|:---|:---:|:---:|
+| Cybersecurity | 2 | 10 |
+| Software Engineering | 3 | 20 |
+| Data Science | 3 | 30 |
+| **Total** | **8** | **3 VLANs** |
 
-Note: This is a simplified logical representation of the lab.
+### Logical Topology
+
+```text
+       CYBERSECURITY       SOFTWARE ENGINEERING       DATA SCIENCE
+           2 PCs                  3 PCs                   3 PCs
+             |                      |                       |
+          VLAN 10                VLAN 20                 VLAN 30
+             \                      |                      /
+              \_____________________|_____________________/
+                                    |
+                             ┌───────────────┐
+                             │ ACCESS SWITCH │
+                             └───────┬───────┘
+                                     |
+                              802.1Q TRUNK
+                                     |
+                             ┌───────────────┐
+                             │    ROUTER     │
+                             └───────┬───────┘
+                                     |
+                          ROUTER SUBINTERFACES
+                              /      |      \
+                             /       |       \
+                        G0/0.10  G0/0.20  G0/0.30
+                           |        |        |
+                        VLAN 10  VLAN 20  VLAN 30
 
 4. IP Addressing Plan
 
