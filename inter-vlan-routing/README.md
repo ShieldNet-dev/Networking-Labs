@@ -128,7 +128,9 @@ R1(config-subif)# encapsulation dot1Q 30
 R1(config-subif)# ip address 192.168.10.190 255.255.255.192
 
 ```
-One key lesson I learnt from this configuration was to enable the physical interface which in turns activates the sub-interfaces. 
+
+> One key lesson I learnt from this configuration was to enable the physical interface which in turns activates the sub-interfaces. 
+
 ---
 
 ## 6. How Inter-VLAN Routing Works
