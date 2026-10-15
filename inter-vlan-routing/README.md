@@ -38,7 +38,7 @@ The router uses the **Router-on-a-Stick** configuration to enable communication 
 
 ### Logical Topology
 
-![Logical Topology](images/logical-topology.png)
+![Logical Topology](inter-vlan-routing/Screenshot_20261015-104925.jpg)
 
 ---
 
