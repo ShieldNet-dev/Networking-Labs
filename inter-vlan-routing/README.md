@@ -162,20 +162,7 @@ Verification Checklist
 - [x] Configured the appropriate IP addressing and default gateways.
 - [x] Successfully tested connectivity between devices in different VLANs.
 
-8. Useful Troubleshooting Commands
-
-These Cisco IOS commands are useful when verifying or troubleshooting a similar configuration.
-
-Command| Purpose
-"show vlan brief"| Verify VLANs and access-port assignments
-"show interfaces trunk"| Check trunk status and VLANs being carried
-"show ip interface brief"| Check interface IP addresses and status
-"show running-config"| Inspect the active configuration
-"show ip route"| Verify connected networks and routing information
-
-If connectivity fails, check VLAN membership, trunk operation, 802.1Q VLAN IDs, interface status, IP addressing, subnet masks, and default gateways.
-
-9. Key Takeaways
+8. Key Takeaways
 
 This mini lab helped me connect several networking concepts I had been studying individually.
 
@@ -186,25 +173,6 @@ This mini lab helped me connect several networking concepts I had been studying 
 - IPv4 subnetting: Defines network boundaries, usable host ranges, and default gateway addresses.
 
 Most importantly, I was able to bring these concepts together, configure the network, and verify that communication between all three VLANs worked.
-
-10. Tools and Technologies
-
-- PingMyNetwork Sandbox
-- Cisco IOS-style CLI
-- VLANs and access ports
-- IEEE 802.1Q trunking
-- Router-on-a-Stick
-- IPv4 subnetting
-- "/26" subnet masks
-- Ping connectivity testing
-
-Acknowledgements
-
-A big thank you to PingMyNetwork for providing the Sandbox.
-
-Being able to build and configure this network directly in my browser, without downloading software or setting up a virtual machine, gave me an opportunity to put what I've been learning into practice.
-
-I appreciate the opportunity to learn by building, testing, and verifying.
 
 ---
 
