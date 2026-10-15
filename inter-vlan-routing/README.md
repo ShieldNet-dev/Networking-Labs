@@ -2,39 +2,50 @@
 
 ![CCNA Practice Lab](https://img.shields.io/badge/CCNA%20Practice%20Lab-PingMyNetwork%20Sandbox-0969DA?style=for-the-badge&labelColor=1F2328)
 
-A practical networking lab combining VLAN configuration, IPv4 subnetting, 802.1Q trunking, and inter-VLAN routing.
+A practical mini lab focused on **Inter-VLAN Routing using Router-on-a-Stick**, combining VLAN configuration, IPv4 subnetting, 802.1Q trunking, and inter-VLAN communication.
 
 ---
 
 ## 1. Overview
 
-This mini lab brings together key networking concepts from my CCNA studies. I configured three departmental VLANs and subnets, then implemented **Router-on-a-Stick** to enable inter-VLAN communication. Using the **PingMyNetwork Sandbox**, I built and tested the network directly in my browser without installing software or setting up a virtual machine.
+This was a mini lab that combined everything I had learned so far, with a strong focus on **Inter-VLAN Routing using Router-on-a-Stick**.
 
-A big thank-you to the PingMyNetwork team for making hands-on networking practice accessible.
+I had **8 PCs** in one faculty building:
+- 2 × Cyber Security department
+- 3 × Software Engineering department
+- 3 × Data Science department
+
+I wanted each department to have its own independent network for better management and security.  
+Although they were all physically in the same building, at Layer 2 they were still in the same broadcast domain. To logically separate them, I created **3 VLANs**.
+
+The original network given was `192.168.10.0/24`.  
+I subnetted it using `/26` (which gives 4 usable subnets — more than I needed).  
+`/25` would have given only 2 subnets, which was not enough.
+
+Using the **PingMyNetwork Sandbox**, I built and tested everything directly in the browser.
+
+---
 
 ## 2. Lab Objectives
 
-- Create three departmental VLANs and subnet an IPv4 network using `/26` prefixes.
-- Assign switch access ports to the appropriate VLANs.
-- Configure an 802.1Q trunk between the switch and router.
-- Implement Router-on-a-Stick using router subinterfaces.
-- Configure default gateways for each subnet.
-- Verify end-to-end connectivity between devices across VLANs.
+- Create three departmental VLANs and subnet the `192.168.10.0/24` network using `/26` prefixes
+- Assign switch access ports to the correct VLANs
+- Configure 802.1Q trunks (including allowed VLANs)
+- Implement Router-on-a-Stick with subinterfaces
+- Enable inter-VLAN communication
+- Verify end-to-end connectivity with ping
+- Document troubleshooting lessons
+
+---
 
 ## 3. Network Topology
 
-The lab consists of **eight PCs distributed across three departments**, each assigned to a dedicated VLAN. All PCs connect to an access switch, which connects to a router through a single **802.1Q trunk link**.
-
-The router uses the **Router-on-a-Stick** configuration to enable communication between devices in different VLANs.
-
-### Department and VLAN Summary
-
-| Department              | Number of PCs | VLAN ID |
-|:------------------------|:-------------:|:-------:|
-| Cybersecurity           | 2             | 10      |
-| Software Engineering    | 3             | 20      |
-| Data Science            | 3             | 30      |
-| **Total**               | **8**         | **3 VLANs** |
+| Department              | Number of PCs | VLAN ID | Network Address     |
+|:------------------------|:-------------:|:-------:|:--------------------|
+| Cyber Security          | 2             | 10      | `192.168.10.0/26`   |
+| Software Engineering    | 3             | 20      | `192.168.10.64/26`  |
+| Data Science            | 3             | 30      | `192.168.10.128/26` |
+| **Total**               | **8**         | **3**   | —                   |
 
 ### Logical Topology
 
@@ -44,91 +55,99 @@ The router uses the **Router-on-a-Stick** configuration to enable communication 
 
 ## 4. IP Addressing Plan
 
-I divided the `192.168.10.0/24` network into three `/26` subnets, assigning one subnet to each department.
+Original network: `192.168.10.0/24`  
+Subnet mask used: `/26` (`255.255.255.192`) → 64 addresses per subnet (62 usable)
 
-A `/26` subnet uses the subnet mask `255.255.255.192` and provides **64 total IPv4 addresses, including 62 usable host addresses**.
+| Department              | VLAN | Network Address       | Default Gateway     | Broadcast Address   |
+|:------------------------|:----:|:----------------------|:--------------------|:--------------------|
+| Cyber Security          | 10   | `192.168.10.0/26`     | `192.168.10.62`     | `192.168.10.63`     |
+| Software Engineering    | 20   | `192.168.10.64/26`    | `192.168.10.126`    | `192.168.10.127`    |
+| Data Science            | 30   | `192.168.10.128/26`   | `192.168.10.190`    | `192.168.10.191`    |
 
-### Subnet Allocation
+I assigned the **last usable IP** in each subnet as the gateway on the router subinterfaces.
 
-| Department              | VLAN ID | Network Address          | Subnet Mask         | Default Gateway      | Broadcast Address    |
-|:------------------------|:-------:|:-------------------------|:--------------------|:---------------------|:---------------------|
-| Cybersecurity           | 10      | `192.168.10.0/26`        | `255.255.255.192`   | `192.168.10.62`      | `192.168.10.63`      |
-| Software Engineering    | 20      | `192.168.10.64/26`       | `255.255.255.192`   | `192.168.10.126`     | `192.168.10.127`     |
-| Data Science            | 30      | `192.168.10.128/26`      | `255.255.255.192`   | `192.168.10.190`     | `192.168.10.191`     |
-
-### Default Gateway Selection
-
-For this lab, I assigned the **last usable IP address in each subnet** to the corresponding router subinterface rather than the first usable address.
-
-| VLAN    | First Usable Address | Last Usable Address / Gateway |
-|:-------:|:---------------------|:------------------------------|
-| VLAN 10 | `192.168.10.1`       | `192.168.10.62`               |
-| VLAN 20 | `192.168.10.65`      | `192.168.10.126`              |
-| VLAN 30 | `192.168.10.129`     | `192.168.10.190`              |
-
+---
 
 ## 5. Implementation
 
-### 5.1 VLAN Configuration
+### 5.1 VLAN & Access Port Configuration
 
-I created three VLANs on the switch and assigned the PC-facing access ports to their respective departments.
+I entered privileged EXEC mode, then global configuration mode on the switch.
 
-| VLAN ID | Department            |
-|:-------:|:----------------------|
-| 10      | Cybersecurity         |
-| 20      | Software Engineering  |
-| 30      | Data Science          |
+**Software Engineering – VLAN 20** (FastEthernet 0/1 – 0/3):
 
-Each VLAN represents a separate Layer 2 broadcast domain.
+```cisco
+SW1(config)# interface range f0/1-3
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 20
+```
+
+The VLAN was created automatically when the ports were assigned.
+
+**Cyber Security – VLAN 10** (FastEthernet 0/4 – 0/5):
+
+```cisco
+SW1(config)# interface range f0/4-5
+SW1(config-if-range)# switchport mode access
+SW1(config-if-range)# switchport access vlan 10
+```
+
+**Data Science – VLAN 30** was also created and assigned to its respective ports.
 
 ### 5.2 Trunk Configuration
 
-I configured the switch-to-router connection as a trunk.
+I configured the links between the switches and from the switch to the router as 802.1Q trunks and allowed the necessary VLANs:
 
-A trunk allows traffic from multiple VLANs to travel across a single physical link. In this lab, IEEE 802.1Q tagging identifies the VLAN associated with Ethernet frames travelling over the trunk.
+```cisco
+SW1(config)# interface g0/1
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,20,30
+
+SW1(config)# interface g0/2
+SW1(config-if)# switchport mode trunk
+SW1(config-if)# switchport trunk allowed vlan 10,20,30
+```
 
 ### 5.3 Router-on-a-Stick Configuration
 
-I used Router-on-a-Stick to route traffic between the three VLANs.
+On the router I created three subinterfaces, enabled 802.1Q encapsulation (not ISL), and assigned the gateway IPs:
 
-Instead of requiring a separate physical router interface for each VLAN, this approach uses one physical interface with multiple logical subinterfaces.
+```cisco
+R1(config)# interface g0/0.10
+R1(config-subif)# encapsulation dot1Q 10
+R1(config-subif)# ip address 192.168.10.62 255.255.255.192
 
-Each subinterface is associated with a VLAN through 802.1Q encapsulation and configured with an IP address from that VLAN's subnet.
+R1(config)# interface g0/0.20
+R1(config-subif)# encapsulation dot1Q 20
+R1(config-subif)# ip address 192.168.10.126 255.255.255.192
 
-| Router Subinterface | VLAN ID | IP Address              | Purpose                        |
-|:--------------------|:-------:|:------------------------|:-------------------------------|
-| `G0/0.10`           | 10      | `192.168.10.62/26`      | Cybersecurity gateway          |
-| `G0/0.20`           | 20      | `192.168.10.126/26`     | Software Engineering gateway   |
-| `G0/0.30`           | 30      | `192.168.10.190/26`     | Data Science gateway           |
+R1(config)# interface g0/0.30
+R1(config-subif)# encapsulation dot1Q 30
+R1(config-subif)# ip address 192.168.10.190 255.255.255.192
+
+R1(config)# interface g0/0
+R1(config-if)# no shutdown
+```
 
 ---
 
 ## 6. How Inter-VLAN Routing Works
 
-Consider a PC in the Cybersecurity VLAN communicating with a PC in the Software Engineering VLAN.
+1. A PC in one VLAN realizes the destination is in a different subnet.
+2. It sends the packet to its default gateway (the router subinterface).
+3. The switch tags the frame with the correct VLAN ID and sends it over the trunk.
+4. The router receives it on the matching subinterface, routes it, and sends it out the correct subinterface with the new VLAN tag.
+5. The switch delivers it to the destination access port.
 
-1. The source PC determines that the destination IP address belongs to a different subnet.
-2. It sends the traffic to its default gateway, `192.168.10.62`.
-3. The switch forwards the frame across the trunk toward the router, with VLAN 10 identified through 802.1Q tagging.
-4. The router examines the destination IP address and routes the packet toward the Software Engineering subnet.
-5. The router forwards the traffic through subinterface `G0/0.20`, with the outgoing frame tagged for VLAN 20.
-6. The switch forwards the frame to the destination PC's access port in VLAN 20.
-
-The same principle applies when devices communicate between any of the three VLANs.
-
-> **Key concept:** The VLANs remain separate Layer 2 broadcast domains, while the router provides Layer 3 connectivity between their IP networks.
+Switches alone cannot perform inter-VLAN routing — the traffic must go to the router first (Router-on-a-Stick).
 
 ---
 
 ## 7. Verification and Results
 
-After configuring the VLANs, trunk, and router subinterfaces, I tested connectivity between devices in different VLANs using `ping`.
+After completing the configuration, I pinged devices across all three VLANs.
 
-**Result:** Successful
-
-All inter-VLAN pings worked successfully.
-
-This confirmed that devices in the three separate subnets could communicate through the router.
+**Result:** All inter-VLAN pings were successful.
 
 ### Verification Checklist
 
@@ -140,21 +159,37 @@ This confirmed that devices in the three separate subnets could communicate thro
 - [x] Brought router interface up with `no shutdown`
 - [x] Successfully pinged between all departments
 
-**View the live project:**  
-[Open this lab on PingMyNetwork](https://pingmynetwork.com/sandbox)
+---
+
+## 8. Troubleshooting Moments & Lessons Learned
+
+During the lab I encountered several real issues that taught me valuable lessons:
+
+1. **Forgot to save the configuration**  
+   I kept using `show` commands and noticed the configs had disappeared because I forgot to write them to memory (`copy running-config startup-config` or `write`).
+
+2. **VLAN 30 missing on SW1**  
+   On the link between SW1 and SW2, VLAN 30 was in the allowed list but not actually created on SW1.  
+   `show vlan brief` revealed it was missing. After creating VLAN 30 on SW1, the pings started working.
+
+3. **Router interfaces are administratively down by default**  
+   I had to remember to issue `no shutdown` on the physical interface.
+
+4. **Switches cannot route between VLANs**  
+   Inter-VLAN traffic must go to the router first. This is the core reason we use Router-on-a-Stick.
+
+These troubleshooting experiences helped me understand the configuration much more deeply than just following a lab guide.
 
 ---
-## 8. Key Takeaways
 
-This mini lab helped me connect several networking concepts I had been studying individually.
+## 9. Key Takeaways
 
-- **VLANs:** Separate devices into different Layer 2 broadcast domains.
-- **Trunking:** Allows multiple VLANs to share a physical link.
-- **802.1Q:** Identifies VLANs through Ethernet frame tagging.
-- **Router-on-a-Stick:** Uses router subinterfaces to route traffic between VLAN subnets.
-- **IPv4 subnetting:** Defines network boundaries, usable host ranges, and default gateway addresses.
-
-Most importantly, I was able to bring these concepts together, configure the network, and verify that communication between all three VLANs worked.
+- VLANs logically separate devices that are physically in the same location
+- `/26` gives enough subnets when you need three networks from a `/24`
+- 802.1Q is the standard trunking protocol (ISL is outdated)
+- Router-on-a-Stick is an efficient way to route between multiple VLANs using a single physical interface
+- Always save your configuration and verify with `show` commands
+- Create the VLAN on every switch that needs to carry it
 
 ---
 
