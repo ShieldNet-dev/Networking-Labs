@@ -62,6 +62,7 @@ The router uses the **Router-on-a-Stick** configuration to enable communication 
                         G0/0.10  G0/0.20  G0/0.30
                            |        |        |
                         VLAN 10  VLAN 20  VLAN 30
+```text
 
 4. IP Addressing Plan
 
