@@ -1,4 +1,4 @@
-# Inter-VLAN Routing with Router-on-a-Stick
+# Inter-VLAN Routing with Router-on-a-Stick Lab
 
 ![CCNA Practice Lab](https://img.shields.io/badge/CCNA%20Practice%20Lab-PingMyNetwork%20Sandbox-0969DA?style=for-the-badge&labelColor=1F2328)
 
@@ -8,21 +8,22 @@ A practical mini lab focused on **Inter-VLAN Routing using Router-on-a-Stick**, 
 
 ## 1. Overview
 
-This was a mini lab that combined everything I had learned so far, with a strong focus on **Inter-VLAN Routing using Router-on-a-Stick**.
+This was a mini lab that combined everything I had learned so Layer 2 Switching, focusing on **Inter-VLAN Routing using Router-on-a-Stick**.
 
 I had **8 PCs** in one faculty building:
-- 2 × Cyber Security department
-- 3 × Software Engineering department
-- 3 × Data Science department
+- 2 for Cyber Security department
+- 3 for Software Engineering department
+- 3 for Data Science department
 
-I wanted each department to have its own independent network for better management and security.  
-Although they were all physically in the same building, at Layer 2 they were still in the same broadcast domain. To logically separate them, I created **3 VLANs**.
+I wanted each department to have its own independent network for better management and security. Although they were all physically in the same building, at Layer 2 they were still in the same broadcast domain. To logically separate them, I created **3 VLANs**.
 
-The original network given was `192.168.10.0/24`.  
-I subnetted it using `/26` (which gives 4 usable subnets — more than I needed).  
-`/25` would have given only 2 subnets, which was not enough.
+The original network given was `192.168.10.0/24`. I subnetted it using `/26` which gives 4 usable subnets, more than I needed. `/25` would have given only 2 subnets, which was not enough.
 
-Using the **PingMyNetwork Sandbox**, I built and tested everything directly in the browser.
+Using the **PingMyNetwork Sandbox**, I built and tested the network directly in my browser without installing software or setting up a virtual machine.
+
+A big thank-you to the PingMyNetwork team for making hands-on networking practice accessible.
+
+**Lab Platform:** [PingMyNetwork Sandbox — Insert Your Lab Link Here](https://pingmynetwork.com/sandbox)
 
 ---
 
