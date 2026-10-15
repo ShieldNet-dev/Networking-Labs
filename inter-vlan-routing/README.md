@@ -159,6 +159,9 @@ After completing the configuration, I pinged devices across all three VLANs.
 - [x] Brought router interface up with `no shutdown`
 - [x] Successfully pinged between all departments
 
+**View the live project:**  
+[Open this lab on PingMyNetwork](https://pingmynetwork.com/sandbox)
+
 ---
 
 ## 8. Troubleshooting Moments & Lessons Learned
@@ -192,5 +195,3 @@ These troubleshooting experiences helped me understand the configuration much mo
 - Create the VLAN on every switch that needs to carry it
 
 ---
-
-Part of my ongoing hands-on networking labs while preparing for the CCNA.
