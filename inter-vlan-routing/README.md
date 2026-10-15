@@ -21,9 +21,9 @@ The original network given was `192.168.10.0/24`. I subnetted it using `/26` whi
 
 Using the **PingMyNetwork Sandbox**, I built and tested the network directly in my browser without installing software or setting up a virtual machine.
 
-A big thank-you to the PingMyNetwork team for making hands-on networking practice accessible.
+A big thank you to the PingMyNetwork team for making hands-on networking practice accessible.
 
-**Lab Platform:** [PingMyNetwork Sandbox — Insert Your Lab Link Here](https://pingmynetwork.com/sandbox)
+**Lab Platform:** [PingMyNetwork Sandbox](https://pingmynetwork.com/sandbox)
 
 ---
 
