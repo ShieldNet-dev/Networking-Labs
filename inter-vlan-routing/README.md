@@ -91,26 +91,27 @@ For this lab, I assigned the **last usable IP address in each subnet** to the co
 | VLAN 30 | `192.168.10.129`     | `192.168.10.190`              |
 
 
-5. Implementation
+## 5. Implementation
 
-5.1 VLAN Configuration
+### 5.1 VLAN Configuration
 
 I created three VLANs on the switch and assigned the PC-facing access ports to their respective departments.
 
-VLAN ID| Department
-10| Cybersecurity
-20| Software Engineering
-30| Data Science
+| VLAN ID | Department            |
+|:-------:|:----------------------|
+| 10      | Cybersecurity         |
+| 20      | Software Engineering  |
+| 30      | Data Science          |
 
 Each VLAN represents a separate Layer 2 broadcast domain.
 
-5.2 Trunk Configuration
+### 5.2 Trunk Configuration
 
 I configured the switch-to-router connection as a trunk.
 
 A trunk allows traffic from multiple VLANs to travel across a single physical link. In this lab, IEEE 802.1Q tagging identifies the VLAN associated with Ethernet frames travelling over the trunk.
 
-5.3 Router-on-a-Stick Configuration
+### 5.3 Router-on-a-Stick Configuration
 
 I used Router-on-a-Stick to route traffic between the three VLANs.
 
@@ -118,25 +119,28 @@ Instead of requiring a separate physical router interface for each VLAN, this ap
 
 Each subinterface is associated with a VLAN through 802.1Q encapsulation and configured with an IP address from that VLAN's subnet.
 
-Router Subinterface| VLAN ID| IP Address| Purpose
-"G0/0.10"| 10| "192.168.10.62/26"| Cybersecurity gateway
-"G0/0.20"| 20| "192.168.10.126/26"| Software Engineering gateway
-"G0/0.30"| 30| "192.168.10.190/26"| Data Science gateway
+| Router Subinterface | VLAN ID | IP Address              | Purpose                        |
+|:--------------------|:-------:|:------------------------|:-------------------------------|
+| `G0/0.10`           | 10      | `192.168.10.62/26`      | Cybersecurity gateway          |
+| `G0/0.20`           | 20      | `192.168.10.126/26`     | Software Engineering gateway   |
+| `G0/0.30`           | 30      | `192.168.10.190/26`     | Data Science gateway           |
 
-6. How Inter-VLAN Routing Works
+---
+
+## 6. How Inter-VLAN Routing Works
 
 Consider a PC in the Cybersecurity VLAN communicating with a PC in the Software Engineering VLAN.
 
 1. The source PC determines that the destination IP address belongs to a different subnet.
-2. It sends the traffic to its default gateway, "192.168.10.62".
+2. It sends the traffic to its default gateway, `192.168.10.62`.
 3. The switch forwards the frame across the trunk toward the router, with VLAN 10 identified through 802.1Q tagging.
 4. The router examines the destination IP address and routes the packet toward the Software Engineering subnet.
-5. The router forwards the traffic through subinterface "G0/0.20", with the outgoing frame tagged for VLAN 20.
+5. The router forwards the traffic through subinterface `G0/0.20`, with the outgoing frame tagged for VLAN 20.
 6. The switch forwards the frame to the destination PC's access port in VLAN 20.
 
 The same principle applies when devices communicate between any of the three VLANs.
 
-Key concept: The VLANs remain separate Layer 2 broadcast domains, while the router provides Layer 3 connectivity between their IP networks.
+> **Key concept:** The VLANs remain separate Layer 2 broadcast domains, while the router provides Layer 3 connectivity between their IP networks.
 
 7. Verification and Results
 
