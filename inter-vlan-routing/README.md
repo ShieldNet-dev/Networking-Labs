@@ -64,27 +64,30 @@ The router uses the **Router-on-a-Stick** configuration to enable communication 
                         VLAN 10  VLAN 20  VLAN 30
 
 
-4. IP Addressing Plan
+## 🌐 4. IP Addressing Plan
 
-I used three "/26" subnets from the "192.168.10.0/24" network.
+I divided the `192.168.10.0/24` network into three `/26` subnets, assigning one subnet to each department.
 
-A "/26" subnet uses the subnet mask "255.255.255.192" and provides 62 usable IPv4 host addresses.
+A `/26` subnet uses the subnet mask `255.255.255.192` and provides **64 total IPv4 addresses, including 62 usable host addresses**.
 
-Department| VLAN| Network| Subnet Mask| Default Gateway| Broadcast Address
-Cybersecurity| 10| "192.168.10.0/26"| "255.255.255.192"| "192.168.10.62"| "192.168.10.63"
-Software Engineering| 20| "192.168.10.64/26"| "255.255.255.192"| "192.168.10.126"| "192.168.10.127"
-Data Science| 30| "192.168.10.128/26"| "255.255.255.192"| "192.168.10.190"| "192.168.10.191"
+### Subnet Allocation
 
-Default Gateway Selection
+| Department | VLAN ID | Network Address | Subnet Mask | Default Gateway | Broadcast Address |
+|:---|:---:|:---|:---|:---|:---|
+| Cybersecurity | 10 | `192.168.10.0/26` | `255.255.255.192` | `192.168.10.62` | `192.168.10.63` |
+| Software Engineering | 20 | `192.168.10.64/26` | `255.255.255.192` | `192.168.10.126` | `192.168.10.127` |
+| Data Science | 30 | `192.168.10.128/26` | `255.255.255.192` | `192.168.10.190` | `192.168.10.191` |
 
-For this lab, I assigned the last usable IP address in each subnet to the router subinterface rather than the first usable address.
+### Default Gateway Selection
 
-VLAN| First Usable Address| Last Usable Address / Gateway
-VLAN 10| "192.168.10.1"| "192.168.10.62"
-VLAN 20| "192.168.10.65"| "192.168.10.126"
-VLAN 30| "192.168.10.129"| "192.168.10.190"
+For this lab, I assigned the **last usable IP address in each subnet** to the corresponding router subinterface rather than the first usable address.
 
-This helped reinforce my understanding of subnet boundaries, usable host ranges, and default gateway selection.
+| VLAN | First Usable Address | Last Usable Address / Gateway |
+|:---:|:---|:---|
+| VLAN 10 | `192.168.10.1` | `192.168.10.62` |
+| VLAN 20 | `192.168.10.65` | `192.168.10.126` |
+| VLAN 30 | `192.168.10.129` | `192.168.10.190` |
+
 
 5. Implementation
 
