@@ -29,9 +29,9 @@ A big thank you to the PingMyNetwork team for making hands-on networking practic
 
 ## 2. Lab Objectives
 
-- Create three departmental VLANs and subnet the `192.168.10.0/24` network using `/26` prefixes
+- Create three departmental VLANs and subnet the `192.168.10.0/24` network
 - Assign switch access ports to the correct VLANs
-- Configure 802.1Q trunks (including allowed VLANs)
+- Configure 802.1Q trunks including allowed VLANs
 - Implement Router-on-a-Stick with subinterfaces
 - Enable inter-VLAN communication
 - Verify end-to-end connectivity with ping
@@ -73,11 +73,9 @@ I assigned the **last usable IP** in each subnet as the gateway on the router su
 
 ### 5.1 VLAN & Access Port Configuration
 
-I entered privileged EXEC mode, then global configuration mode on the switch.
-
 **Software Engineering – VLAN 20** (FastEthernet 0/1 – 0/3):
 
-```cisco
+```
 SW1(config)# interface range f0/1-3
 SW1(config-if-range)# switchport mode access
 SW1(config-if-range)# switchport access vlan 20
@@ -87,33 +85,36 @@ The VLAN was created automatically when the ports were assigned.
 
 **Cyber Security – VLAN 10** (FastEthernet 0/4 – 0/5):
 
-```cisco
+```
 SW1(config)# interface range f0/4-5
 SW1(config-if-range)# switchport mode access
 SW1(config-if-range)# switchport access vlan 10
 ```
 
-**Data Science – VLAN 30** was also created and assigned to its respective ports.
+**Data Science – VLAN 30** was also created to enable communication from PCs on Data Science department that are connected from SW2.
 
 ### 5.2 Trunk Configuration
 
 I configured the links between the switches and from the switch to the router as 802.1Q trunks and allowed the necessary VLANs:
 
-```cisco
+```
 SW1(config)# interface g0/1
 SW1(config-if)# switchport mode trunk
 SW1(config-if)# switchport trunk allowed vlan 10,20,30
 
 SW1(config)# interface g0/2
 SW1(config-if)# switchport mode trunk
-SW1(config-if)# switchport trunk allowed vlan 10,20,30
+SW1(config-if)# switchport trunk allowed vlan 30
 ```
 
 ### 5.3 Router-on-a-Stick Configuration
 
-On the router I created three subinterfaces, enabled 802.1Q encapsulation (not ISL), and assigned the gateway IPs:
+On the router I created three subinterfaces, enabled 802.1Q encapsulation, and assigned the gateway IPs:
 
-```cisco
+```
+R1(config)# interface g0/0
+R1(config-if)# no shutdown
+
 R1(config)# interface g0/0.10
 R1(config-subif)# encapsulation dot1Q 10
 R1(config-subif)# ip address 192.168.10.62 255.255.255.192
@@ -126,21 +127,19 @@ R1(config)# interface g0/0.30
 R1(config-subif)# encapsulation dot1Q 30
 R1(config-subif)# ip address 192.168.10.190 255.255.255.192
 
-R1(config)# interface g0/0
-R1(config-if)# no shutdown
 ```
-
+One key lesson I learnt from this configuration was to enable the physical interface which in turns activates the sub-interfaces. 
 ---
 
 ## 6. How Inter-VLAN Routing Works
 
 1. A PC in one VLAN realizes the destination is in a different subnet.
-2. It sends the packet to its default gateway (the router subinterface).
+2. It sends the packet to its default gateway that is the router subinterface.
 3. The switch tags the frame with the correct VLAN ID and sends it over the trunk.
 4. The router receives it on the matching subinterface, routes it, and sends it out the correct subinterface with the new VLAN tag.
 5. The switch delivers it to the destination access port.
 
-Switches alone cannot perform inter-VLAN routing — the traffic must go to the router first (Router-on-a-Stick).
+Switches alone cannot perform inter-VLAN routing, the traffic must go to the router first.
 
 ---
 
@@ -160,8 +159,11 @@ After completing the configuration, I pinged devices across all three VLANs.
 - [x] Brought router interface up with `no shutdown`
 - [x] Successfully pinged between all departments
 
-**View the live project:**  
-[Open this lab on PingMyNetwork Sandbox](https://pingmynetwork.com/sandbox)
+**Try this lab yourself:**
+
+1. Download the lab configuration file: [lab-config.json](https://drive.google.com/file/d/16K_QtTtnLLDjS2q8-208grUbBbRJG9c4/view?usp=drivesdk)
+2. Go to the [PingMyNetwork Sandbox](https://pingmynetwork.com/sandbox)
+3. Import the JSON file into the sandbox
 
 ---
 
