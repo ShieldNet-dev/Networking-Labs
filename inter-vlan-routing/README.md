@@ -38,31 +38,7 @@ The router uses the **Router-on-a-Stick** configuration to enable communication 
 
 ### Logical Topology
 
-```text
-       CYBERSECURITY       SOFTWARE ENGINEERING       DATA SCIENCE
-           2 PCs                  3 PCs                   3 PCs
-             |                      |                       |
-          VLAN 10                VLAN 20                 VLAN 30
-             \                      |                      /
-              \_____________________|_____________________/
-                                    |
-                             ┌───────────────┐
-                             │ ACCESS SWITCH │
-                             └───────┬───────┘
-                                     |
-                              802.1Q TRUNK
-                                     |
-                             ┌───────────────┐
-                             │    ROUTER     │
-                             └───────┬───────┘
-                                     |
-                          ROUTER SUBINTERFACES
-                              /      |      \
-                             /       |       \
-                        G0/0.10  G0/0.20  G0/0.30
-                           |        |        |
-                        VLAN 10  VLAN 20  VLAN 30
-```
+![Logical Topology](images/logical-topology.png)
 
 ---
 
