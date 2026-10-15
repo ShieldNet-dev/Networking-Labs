@@ -142,6 +142,8 @@ The same principle applies when devices communicate between any of the three VLA
 
 > **Key concept:** The VLANs remain separate Layer 2 broadcast domains, while the router provides Layer 3 connectivity between their IP networks.
 
+---
+
 ## 7. Verification and Results
 
 After configuring the VLANs, trunk, and router subinterfaces, I tested connectivity between devices in different VLANs using `ping`.
