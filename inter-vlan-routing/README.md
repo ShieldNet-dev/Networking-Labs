@@ -8,9 +8,7 @@ A practical networking lab combining VLAN configuration, IPv4 subnetting, 802.1Q
 
 ## 1. Overview
 
-This mini lab brings together key networking concepts from my CCNA studies. I configured three departmental VLANs and subnets, then implemented **Router-on-a-Stick** to enable inter-VLAN communication.
-
-Using the **PingMyNetwork Sandbox**, I built and tested the network directly in my browser without installing software or setting up a virtual machine.
+This mini lab brings together key networking concepts from my CCNA studies. I configured three departmental VLANs and subnets, then implemented **Router-on-a-Stick** to enable inter-VLAN communication. Using the **PingMyNetwork Sandbox**, I built and tested the network directly in my browser without installing software or setting up a virtual machine.
 
 A big thank-you to the PingMyNetwork team for making hands-on networking practice accessible.
 
